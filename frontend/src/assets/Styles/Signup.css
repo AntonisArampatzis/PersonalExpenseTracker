@@ -1,0 +1,53 @@
+#signup-form {
+  background-color: #f8f9fa;
+  border-radius: 24px; /* a bit tighter, less bubble-wrap */
+  border: 1px solid #f8f9fa; /* subtle dark outline */
+  box-shadow: 5px 5px 1cap rgba(7, 7, 7, 0.05); /* softer, modern glow */
+  padding: 2rem;
+}
+
+#signup-form .MuiInput-root {
+  color: #0a9396; /* text color */
+}
+
+#signup-form .MuiInputLabel-root {
+  color: #0a9396; /* label color */
+}
+
+#signup-form .MuiInput-underline:before {
+  border-bottom-color: #0a9396;
+}
+
+#signup-form .MuiInput-underline:hover:before {
+  border-bottom-color: #0a9396;
+}
+
+#signup-form .MuiInput-underline:after {
+  border-bottom-color: #0a9396;
+}
+
+/* outlined variant too */
+
+#signup-form .MuiOutlinedInput-root {
+  color: #0a9396;
+}
+
+#signup-form .MuiOutlinedInput-root fieldset {
+  border-color: #0a9396;
+}
+
+#signup-form .MuiOutlinedInput-root:hover fieldset {
+  border-color: #0a9396;
+}
+
+#signup-form .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #0a9396;
+}
+
+#signup-form .MuiInputLabel-root {
+  color: #0a9396;
+}
+
+#signup-form .MuiInputLabel-root.Mui-focused {
+  color: #0a9396;
+}
