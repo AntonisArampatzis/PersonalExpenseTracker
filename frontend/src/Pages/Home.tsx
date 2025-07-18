@@ -81,142 +81,147 @@ export default function Home() {
     // Outer Box
     <Box
       sx={{
-        maxWidth: 1200, // px max width for the container
-        minHeight: "100vh",
-        width: "100%",
-        mx: "auto",
+        maxWidth: 1200,
+        mx: "auto", // center horizontally in viewport
         px: 2,
-        pt: { xs: 10, md: 5 },
+        mt: { xs: 4, md: 8 },
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        justifyContent: "center",
+        gap: 4,
+        minHeight: "80vh", // optional: ensures some vertical breathing room
       }}
     >
-      {/* Inner box that splits into Expenses form and Expenses table */}
+      {/* Form Box */}
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
+          flex: { xs: "1 1 100%", md: "0 0 30%" }, // 30% width desktop, full width mobile
+          borderRadius: 3,
+          boxShadow: 3,
+          bgcolor: "background.paper",
+          p: { xs: 3, md: 4 },
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 2, md: 4 },
-          mb: 4,
-          mt: 4,
-          height: { md: "600px" }, // fixed height on desktop, auto on mobile
+          flexDirection: "column",
+          alignItems: "center", // center horizontally inside form box
+          justifyContent: "center", // center vertically if box taller
+          gap: 3,
         }}
       >
-        {/* Form Box */}
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
+        <PageHeader
+          variant="h5"
+          align="center"
           sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center", // vertical center inside fixed height
-            alignItems: "center", // horizontal center inside fixed width
-            borderRadius: "25px",
-            boxShadow: "5px 5px 6px grey",
-            p: { xs: 2, md: 4 },
-            maxHeight: "100%", // fill parent's height
-            overflowY: "auto", // scroll if needed
-            bgcolor: "background.paper", // or custom bg color
+            color: "#0a9396", // Soothing greenish-blue
+            fontWeight: 600, // Slightly bold
+            mb: 4, // Margin bottom for spacing
+            textTransform: "uppercase", // Optional: gives it a strong heading look
+            fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
           }}
         >
-          <PageHeader variant="h5" align="center">
-            Add Expense
-          </PageHeader>
+          Add Expense
+        </PageHeader>
 
-          <TextField
-            id="expense"
-            name="expense"
-            label="What did you buy?"
-            variant="standard"
-            type="text"
-            fullWidth
-            sx={{ mt: { xs: 5, md: 3 } }}
-            value={name || ""}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+        <TextField
+          id="expense"
+          name="expense"
+          label="What did you buy?"
+          variant="standard"
+          type="text"
+          fullWidth
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          sx={{ mt: 5 }}
+          required
+        />
 
-          <FormControl
-            fullWidth
-            margin="normal"
-            variant="standard"
-            sx={{ mt: { xs: 5, md: 3 } }}
-            required
+        <FormControl fullWidth variant="standard" required sx={{ mt: 2 }}>
+          <InputLabel id="categoryDropdown">Choose a category</InputLabel>
+          <Select
+            labelId="categoryDropdown"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            sx={{ textAlign: "left" }}
           >
-            <InputLabel id="categoryDropdown">Choose a category</InputLabel>
-            <Select
-              labelId="categoryDropdown"
-              id="category"
-              value={category || ""}
-              onChange={(e) => setCategory(e.target.value)}
-              sx={{ textAlign: "left" }}
-            >
-              <ListSubheader>----- Food & Drink -----</ListSubheader>
-              <MenuItem value="Food">Food</MenuItem>
-              <MenuItem value="Coffee and Drinks">Coffee and Drinks</MenuItem>
-              <MenuItem value="Snacks">Snacks</MenuItem>
+            <ListSubheader>----- Food & Drink -----</ListSubheader>
+            <MenuItem value="Food">Food</MenuItem>
+            <MenuItem value="Coffee and Drinks">Coffee and Drinks</MenuItem>
+            <MenuItem value="Snacks">Snacks</MenuItem>
 
-              <ListSubheader>----- Essentials -----</ListSubheader>
-              <MenuItem value="Rent / Mortgage">Rent / Mortgage</MenuItem>
-              <MenuItem value="Utilities">Utilities</MenuItem>
-              <MenuItem value="Groceries">Groceries</MenuItem>
+            <ListSubheader>----- Essentials -----</ListSubheader>
+            <MenuItem value="Rent / Mortgage">Rent / Mortgage</MenuItem>
+            <MenuItem value="Utilities">Utilities</MenuItem>
+            <MenuItem value="Groceries">Groceries</MenuItem>
 
-              <ListSubheader>----- Lifestyle -----</ListSubheader>
-              <MenuItem value="Clothing">Clothing</MenuItem>
-              <MenuItem value="Subscriptions">Subscriptions</MenuItem>
-              <MenuItem value="Personal Care">Personal Care</MenuItem>
-            </Select>
-          </FormControl>
+            <ListSubheader>----- Lifestyle -----</ListSubheader>
+            <MenuItem value="Clothing">Clothing</MenuItem>
+            <MenuItem value="Subscriptions">Subscriptions</MenuItem>
+            <MenuItem value="Personal Care">Personal Care</MenuItem>
+          </Select>
+        </FormControl>
 
-          <TextField
-            id="cost"
-            name="cost"
-            label="How much did it cost?"
-            variant="standard"
-            type="number"
-            fullWidth
-            sx={{ mt: { xs: 5, md: 3 } }}
-            value={cost || ""}
-            onChange={(e) => setCost(parseInt(e.target.value))}
-            required
-          />
+        <TextField
+          id="cost"
+          name="cost"
+          label="How much did it cost?"
+          variant="standard"
+          type="number"
+          fullWidth
+          value={cost}
+          onChange={(e) => setCost(parseInt(e.target.value) || "")}
+          required
+          sx={{ mt: 2 }}
+        />
 
-          <BtnComp
-            type="submit"
-            variant="contained"
-            sx={{ mt: 5, width: "30%", backgroundColor: "#0a9396" }}
-          >
-            add expense
-          </BtnComp>
+        <BtnComp
+          type="submit"
+          variant="contained"
+          sx={{ width: "50%", mt: 7, backgroundColor: "#0a9396" }}
+        >
+          Add Expense
+        </BtnComp>
 
-          <Message message={message} />
-        </Box>
+        <Message message={message} />
+      </Box>
 
-        {/* Expenses Table Panel */}
-        <Box
+      {/* Expenses Table Panel */}
+      <Box
+        sx={{
+          flex: { xs: "1 1 100%", md: "0 0 70%" }, // 70% desktop, full width mobile
+          borderRadius: 3,
+          boxShadow: 3,
+          bgcolor: "background.paper",
+          p: { xs: 3, md: 4 },
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: { md: "500px" }, // fixed height on desktop
+          maxHeight: { md: "600px" }, // max height
+          overflowY: "auto", // scroll if content too tall
+        }}
+      >
+        <PageHeader
+          variant="h5"
+          align="center"
           sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            p: { xs: 2, md: 4 },
-            bgcolor: "background.paper",
-            borderRadius: "25px",
-            boxShadow: "5px 5px 6px grey",
-            maxHeight: { md: "600px" },
-            overflowY: "auto",
+            color: "#0a9396", // Soothing greenish-blue
+            fontWeight: 600, // Slightly bold
+            mb: 2, // Margin bottom for spacing
+            textTransform: "uppercase", // Optional: gives it a strong heading look
+            fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
           }}
         >
-          <PageHeader variant="h5" align="center">
-            Your Expenses
-          </PageHeader>
-          <Box sx={{ width: "100%", mt: 2 }}>
-            <ExpensesPanel
-              isLoading={isLoading}
-              allExpenses={allExpenses}
-              setAllExpenses={setAllExpenses}
-            />
-          </Box>
+          Your Expenses
+        </PageHeader>
+        <Box sx={{ width: "100%", mt: 2 }}>
+          <ExpensesPanel
+            isLoading={isLoading}
+            allExpenses={allExpenses}
+            setAllExpenses={setAllExpenses}
+          />
         </Box>
       </Box>
     </Box>

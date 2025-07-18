@@ -200,7 +200,7 @@ def verify_token():
     try:
         ##get the identity of the token,this identity declared in (access_token = create_access_token(identity=user.id,)
         current_user = get_jwt_identity()
-        user = UsersTable.query.filter_by(user_id=current_user).first()
+        user = UsersTable.query.get(current_user)
         return jsonify({"message": "Token verified and is valid", "user_id": current_user,"role": user.role}), 200
     except Exception as e:
         print(f"Token verification error: {e}")

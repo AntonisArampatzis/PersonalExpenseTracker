@@ -82,12 +82,17 @@ function ExpensesPanel({
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: { pageSize: 8 },
+              paginationModel: { pageSize: 5 },
             },
           }}
-          pageSizeOptions={[8]}
+          pageSizeOptions={[5]}
           // checkboxSelection
-          sx={{ border: 0 }}
+          sx={{
+            height: { xs: 300, md: 400 }, // smaller height on small screens, bigger on desktop
+            maxWidth: "100%",
+            overflowY: "auto",
+            border: 0,
+          }}
         />
       )}
       <Message message={message} />

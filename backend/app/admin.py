@@ -24,6 +24,23 @@ def get_all_users():
     })
 
 
+@admin.route('/delete-user/<uuid:user_id>',methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+
+    user = UsersTable.query.get(user_id)
+    if not user:
+        return jsonify({"error":"User not found"}), 404
+    
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({"message":"User deleted successfully"}), 200
+
+
+
+        
+
+
 @admin.route('/all-expenses',methods=['GET'])
 @jwt_required()
 def get_all_expenses():

@@ -64,22 +64,124 @@ export default function Navbar({ setIsLogged }: NavbarProps) {
   };
 
   return (
-    <AppBar
-      position="static"
-      elevation={0} // Makes it blend with background
-      sx={{
-        bgcolor: "#f8f9fa",
-        zIndex: 1100,
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box
+    // <AppBar
+    //   position="static"
+    //   elevation={0} // Makes it blend with background
+    //   sx={{
+    //     bgcolor: "#f8f9fa",
+    //     zIndex: 1100,
+    //   }}
+    // >
+    //   <Container maxWidth="xl">
+    //     <Toolbar disableGutters>
+    //       {/* LEFT SIDE: Logo */}
+    //       <Box sx={{ display: "flex", alignItems: "center" }}>
+    //         <Typography
+    //           variant="h6"
+    //           noWrap
+    //           onClick={handleLogoClick}
+    //           sx={{
+    //             ml: 2,
+    //             color: "#0a9396",
+    //             cursor: "pointer",
+    //             display: { xs: "none", md: "flex" },
+    //           }}
+    //         >
+    //           PersonalExpenseTracker
+    //         </Typography>
+    //       </Box>
+
+    //       {/* SPACER: Pushes logout to the right */}
+    //       <Box sx={{ flexGrow: 1 }} />
+
+    //       {/* RIGHT SIDE: Desktop Logout */}
+    //       <Box
+    //         sx={{
+    //           display: { xs: "none", md: "flex" },
+    //           alignItems: "center",
+    //           mr: 2,
+    //         }}
+    //       >
+    //         <Button
+    //           onClick={handleLogout}
+    //           sx={{
+    //             px: 2,
+    //             py: 1,
+    //             color: "#0a9396",
+    //             textTransform: "none",
+    //           }}
+    //         >
+    //           Logout
+    //         </Button>
+    //       </Box>
+
+    //       {/* RIGHT SIDE: Mobile Hamburger Menu */}
+    //       <Box sx={{ display: { xs: "flex", md: "none" }, ml: "auto" }}>
+    //         <IconButton size="large" onClick={handleOpenNavMenu}>
+    //           <MenuIcon />
+    //         </IconButton>
+
+    //         <Menu
+    //           anchorEl={anchorElNav}
+    //           open={Boolean(anchorElNav)}
+    //           onClose={handleCloseNavMenu}
+    //           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+    //           transformOrigin={{ vertical: "top", horizontal: "left" }}
+    //         >
+    //           <MenuItem key="logout" onClick={handleLogout}>
+    //             <Typography textAlign="center" color="#0a9396">
+    //               Logout
+    //             </Typography>
+    //           </MenuItem>
+    //         </Menu>
+    //       </Box>
+    //       <Message/>
+    //     </Toolbar>
+    //   </Container>
+    // </AppBar>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" elevation={0} sx={{ bgcolor: "#f8f9fa" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+          }}
+        >
+          {/* Left: Logo */}
+          <Typography
+            variant="h6"
+            noWrap
+            onClick={handleLogoClick}
             sx={{
-              display: { xs: "flex", md: "none" },
-              justifyContent: "flex-end",
+              color: "#0a9396",
+              cursor: "pointer",
+              flexGrow: { xs: 1, md: 0 },
+              textAlign: { xs: "center", md: "left" },
+              display: "flex",
             }}
           >
+            PersonalExpenseTracker
+          </Typography>
+
+          {/* Right: Logout (hides on mobile) */}
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Button
+              onClick={handleLogout}
+              sx={{
+                px: 2,
+                py: 1,
+                color: "#0a9396",
+                textTransform: "none",
+              }}
+            >
+              LOGOUT
+            </Button>
+          </Box>
+
+          {/* Right: Mobile menu (Logout only) */}
+          <Box sx={{ display: { xs: "flex", md: "none" }, ml: "auto" }}>
             <IconButton size="large" onClick={handleOpenNavMenu}>
               <MenuIcon />
             </IconButton>
@@ -90,7 +192,6 @@ export default function Navbar({ setIsLogged }: NavbarProps) {
               onClose={handleCloseNavMenu}
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               transformOrigin={{ vertical: "top", horizontal: "left" }}
-              sx={{ display: { xs: "block", md: "none" } }}
             >
               <MenuItem key="logout" onClick={handleLogout}>
                 <Typography textAlign="center" color="#0a9396">
@@ -99,34 +200,9 @@ export default function Navbar({ setIsLogged }: NavbarProps) {
               </MenuItem>
             </Menu>
           </Box>
-
-          <Box
-            sx={{ display: { md: "flex", sm: "none" }, alignItems: "center" }}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                color: "#0a9396",
-                cursor: "pointer",
-              }}
-              onClick={handleLogoClick}
-            >
-              PersonalExpenseTracker
-            </Typography>
-
-            <Button
-              onClick={handleLogout}
-              sx={{ px: 2, py: 1, color: "#0a9396", display: "block" }}
-            >
-              Logout
-            </Button>
-          </Box>
-          <Message message={message} />
         </Toolbar>
-      </Container>
-    </AppBar>
+      </AppBar>
+      <Message message={message} />
+    </Box>
   );
 }

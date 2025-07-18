@@ -29,7 +29,7 @@ export default function Message({ message }: MessageProps) {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       onClose={handleClose}
       message={message}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}

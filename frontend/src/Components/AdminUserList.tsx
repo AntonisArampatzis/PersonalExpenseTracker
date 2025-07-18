@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Users } from "../types/Users";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Message from "./Message";
 
 // type AdminUserListProps = {
 //   allUsers: Users[];
@@ -13,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function AdminUserList() {
   const [allUsers, setAllUsers] = useState<Users[]>([]);
+  const [message, setMessage] = useState<string>("");
   const fetchAllUsers = async () => {
     try {
       const response = await axios.get(
@@ -31,6 +33,27 @@ export default function AdminUserList() {
     fetchAllUsers();
   }, []);
 
+  const handleDelete = async (userId: string) => {
+    try {
+      const response = await axios.delete(
+        `http://127.0.0.1:5000/admin/delete-user/${userId}`, //BACKTICKS-INSERTING VARIABLE
+        { withCredentials: true }
+      );
+      setMessage(response.data.message);
+      setAllUsers((prevUsers) =>
+        prevUsers.filter((user) => user.user_id !== userId)
+      );
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setMessage(error.response?.data?.error || "Something went wrong.");
+        console.error("Failed to delete:", error);
+      } else {
+        setMessage("Unexpected error occurred.");
+        console.error("Non-Axios error:", error);
+      }
+    }
+  };
+
   const columns: GridColDef[] = [
     { field: "id", headerName: "User ID", flex: 3 },
     { field: "email", headerName: "Email", flex: 2 },
@@ -44,7 +67,7 @@ export default function AdminUserList() {
       renderCell: (params) => (
         <IconButton
           color="error"
-          // onClick={() => handleDelete(params.row.id)}
+          onClick={() => handleDelete(params.row.id)}
           aria-label="delete"
         >
           <DeleteIcon />
@@ -60,17 +83,20 @@ export default function AdminUserList() {
     lastName: user.lastName,
   }));
   return (
-    <DataGrid
-      rows={rows}
-      columns={columns}
-      initialState={{
-        pagination: {
-          paginationModel: { pageSize: 8 },
-        },
-      }}
-      pageSizeOptions={[8]}
-      // checkboxSelection
-      sx={{ border: 0 }}
-    />
+    <>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 8 },
+          },
+        }}
+        pageSizeOptions={[8]}
+        // checkboxSelection
+        sx={{ border: 0 }}
+      />
+      <Message message={message} />
+    </>
   );
 }

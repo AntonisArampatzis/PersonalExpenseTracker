@@ -8,53 +8,28 @@ import AdminExpenseList from "../Components/AdminExpenseList";
 import PageHeader from "../Components/PageHeader";
 
 export default function AdminHomePage() {
-  // const [allUsers, setAllUsers] = useState<Users[]>([]);
-
-  // const fetchAllUsers = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://127.0.0.1:5000/admin/all-users",
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     setAllUsers(response.data.all_users); // assuming backend sends { all_users: [...] }
-  //   } catch (error: any) {
-  //     console.error("Failed to fetch users:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchAllUsers();
-  // }, []);
-
-  // const columns: GridColDef[] = [
-  //   { field: "id", headerName: "User ID", flex: 3 },
-  //   { field: "email", headerName: "Email", flex: 2 },
-  //   { field: "firstName", headerName: "First Name", flex: 2 },
-  //   { field: "lastName", headerName: "Last Name", flex: 2 },
-  // ];
-
-  // const rows = allUsers.map((user) => ({
-  //   id: user.user_id,
-  //   email: user.email,
-  //   firstName: user.firstName,
-  //   lastName: user.lastName,
-  // }));
-
   return (
     <Box
       sx={{
-        // minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center", // horizontally center entire container
-        alignItems: "center", // vertically center entire container
+        justifyContent: "center", // centers container vertically in parent
+        alignItems: "center", // centers container horizontally
         px: 2,
-        // bgcolor: "background.default",
       }}
     >
-      <PageHeader variant="h4" align="center" sx={{ color: "#0a9396" }}>
+      <PageHeader
+        variant="h4"
+        align="center"
+        sx={{
+          color: "#0a9396", // Soothing greenish-blue
+          fontWeight: 600, // Slightly bold
+          mb: { xs: 2 }, // Margin bottom for spacing
+          mt: { xs: 2 },
+          textTransform: "uppercase", // Optional: gives it a strong heading look
+          fontSize: { xs: "1rem", md: "2rem" }, // Responsive sizing
+        }}
+      >
         Admin Dashboard
       </PageHeader>
 
@@ -62,38 +37,63 @@ export default function AdminHomePage() {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          gap: { xs: 3, md: 6 }, // gap between the two panels
+          gap: { xs: 3, md: 6 },
           width: "100%",
-          maxWidth: 1200, // max width to keep it neat on big screens
-          p: { xs: 2, md: 4 },
-          mt: 5,
+          maxWidth: 1400, // increased max width for more space
+          p: { xs: 3, md: 5 },
+          mt: 1,
           boxShadow: 3,
           borderRadius: 2,
           bgcolor: "background.paper",
-          minHeight: { xs: "auto", md: 500 }, // fixed height on desktop for better alignment
+          minHeight: { xs: "auto", md: 600 }, // increased height for desktop
+          overflow: "hidden",
         }}
       >
+        {/* User List Panel */}
         <Box
           sx={{
             flex: 1,
-            // overflowY: "auto",
             minHeight: 0,
+            // overflowY: "auto", // enable vertical scrolling inside panel if needed
+            px: 1,
           }}
         >
-          <PageHeader variant="h5" align="center" sx={{ color: "#0a9396" }}>
+          <PageHeader
+            variant="h5"
+            align="center"
+            sx={{
+              color: "#0a9396", // Soothing greenish-blue
+              fontWeight: 600, // Slightly bold
+              mb: 2, // Margin bottom for spacing
+              textTransform: "uppercase", // Optional: gives it a strong heading look
+              fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
+            }}
+          >
             User List
           </PageHeader>
           <AdminUserList />
         </Box>
 
+        {/* Expenses List Panel */}
         <Box
           sx={{
             flex: 1,
-            // overflowY: "auto",
             minHeight: 0,
+            // overflowY: "auto",
+            px: 1,
           }}
         >
-          <PageHeader variant="h5" align="center" sx={{ color: "#0a9396" }}>
+          <PageHeader
+            variant="h5"
+            align="center"
+            sx={{
+              color: "#0a9396", // Soothing greenish-blue
+              fontWeight: 600, // Slightly bold
+              mb: 2, // Margin bottom for spacing
+              textTransform: "uppercase", // Optional: gives it a strong heading look
+              fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
+            }}
+          >
             Expenses List
           </PageHeader>
           <AdminExpenseList />

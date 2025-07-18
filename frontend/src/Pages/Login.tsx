@@ -89,7 +89,14 @@ export default function Login({ setIsLogged, setIsAdmin }: LoginProps) {
       >
         <PageHeader
           variant="h4"
-          sx={{ color: "black", fontFamily: "Roboto Condensed" }}
+          sx={{
+            color: "#0a9396", // Soothing greenish-blue
+            fontWeight: 600, // Slightly bold
+            mb: { xs: 2, md: 4 }, // Margin bottom for spacing
+            mt: { xs: 2 },
+            textTransform: "uppercase", // Optional: gives it a strong heading look
+            fontSize: { xs: "1rem", md: "2rem" }, // Responsive sizing
+          }}
           align="center"
         >
           LOGIN
