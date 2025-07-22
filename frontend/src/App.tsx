@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Signup from "./Pages/Signup";
-import Home from "./Pages/Home";
+import Home from "./Pages/UserHomePage";
 import Login from "./Pages/Login";
 import React, { JSX, useEffect, useState } from "react"; //needed when im going from jsx(no need to import ) to tsx
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -32,12 +32,13 @@ function App(): JSX.Element {
         console.log(refreshPage_response.data.user_id);
         console.log(refreshPage_response.data.role);
         setIsLogged(true);
-        // const role = refreshPage_response.data.role;
-        // if (role === "Admin") {
-        //   setIsAdmin(true);
-        // } else {
-        //   setIsAdmin(false);
-        // }
+        // Only an admin user has role, user has null
+        const role = refreshPage_response.data.role;
+        if (role === "Admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
         console.log("refreshPage useEffect called");
         console.log(refreshPage_response.data.message);
       } catch (error: unknown) {
@@ -54,7 +55,7 @@ function App(): JSX.Element {
 
   // Polling the backend every X seconds to verify if the user's token is still valid
   useEffect(() => {
-    // if (!isLogged) return;
+    if (!isLogged) return;
 
     const checkToken = setInterval(async () => {
       //one backend call to verify
@@ -65,6 +66,13 @@ function App(): JSX.Element {
         );
         console.log("verify token call");
         setIsLogged(true);
+        // Only an admin user has role, user has null
+        const role = verify_response.data.role;
+        if (role === "Admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
         console.log("Status:", verify_response.data.message);
         console.log("User ID:", verify_response.data.user_id);
       } catch (error: unknown) {
@@ -89,6 +97,13 @@ function App(): JSX.Element {
               );
               console.log("verify token call");
               setIsLogged(true);
+              // Only an admin user has role, user has null
+              const role = retry_verify_response.data.role;
+              if (role === "Admin") {
+                setIsAdmin(true);
+              } else {
+                setIsAdmin(false);
+              }
               console.log("Status:", retry_verify_response.data.message);
 
               // If refresh fails Logout
@@ -130,19 +145,20 @@ function App(): JSX.Element {
               setIsLogged={setIsLogged}
               isLoading={isLoading}
               isAdmin={isAdmin}
+              setIsAdmin={setIsAdmin}
             />
           }
         >
-          {/* <Route
+          <Route
             element={<UserCheck isAdmin={isAdmin} isLoading={isLoading} />}
-          > */}
-          <Route path="/home" element={<Home />} />
-          {/* </Route> */}
-          {/* <Route
+          >
+            <Route path="/home" element={<Home />} />
+          </Route>
+          <Route
             element={<AdminCheck isAdmin={isAdmin} isLoading={isLoading} />}
-          > */}
-          <Route path="/admin" element={<AdminHomePage />} />
-          {/* </Route> */}
+          >
+            <Route path="/admin" element={<AdminHomePage />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

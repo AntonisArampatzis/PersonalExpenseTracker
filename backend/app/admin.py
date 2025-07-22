@@ -11,17 +11,18 @@ admin = Blueprint('admin',__name__)
 def get_all_users():
 
     users = UsersTable.query.all()
-    return jsonify({
-        "all_users": [
-            {
-                "user_id": user.user_id,
-                "email": user.email,
-                "firstName": user.firstName,
-                "lastName": user.lastName
-            }
-            for user in users
-        ]
-    })
+    all_users = [
+    {
+        "user_id": user.user_id,
+        "email": user.email,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "role": user.role  
+    }
+    for user in users
+]
+
+    return jsonify({"all_users": all_users})
 
 
 @admin.route('/delete-user/<uuid:user_id>',methods=['DELETE'])
@@ -46,16 +47,15 @@ def delete_user(user_id):
 def get_all_expenses():
 
     results  =  db.session.query(Expenses, UsersTable).join(UsersTable, Expenses.user_id == UsersTable.user_id).all()
-    return jsonify({
-        "all_expenses": [
-            {
-                "expense_id": expense.expense_id,
+    all_expenses = [
+    {
+        "expense_id": expense.expense_id,
                 "name": expense.name,
                 "category": expense.category,
                 "cost": expense.cost,
                 "user_id": expense.user_id,
                 "user_email": user.email
-            }
-            for expense,user  in results 
-        ]
-    })
+    }
+    for expense,user  in results 
+]
+    return jsonify({"all_expenses":all_expenses})

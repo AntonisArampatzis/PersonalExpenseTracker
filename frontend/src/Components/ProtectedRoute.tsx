@@ -10,6 +10,7 @@ type ProtectedRouteProps = {
   isLoading: boolean;
   isAdmin: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function ProtectedRoute({
@@ -17,6 +18,7 @@ export default function ProtectedRoute({
   isLoading,
   isAdmin,
   setIsLogged,
+  setIsAdmin,
 }: ProtectedRouteProps) {
   if (isLoading) {
     return <LoadingIndicator />;
@@ -24,7 +26,7 @@ export default function ProtectedRoute({
 
   return isLogged ? (
     <>
-      <Navbar setIsLogged={setIsLogged} />
+      <Navbar setIsLogged={setIsLogged} setIsAdmin={setIsAdmin} />
       <Outlet />
     </>
   ) : (

@@ -7,11 +7,6 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Message from "./Message";
 
-// type AdminUserListProps = {
-//   allUsers: Users[];
-//   setAllUsers: React.Dispatch<React.SetStateAction<Users[]>>;
-// };
-
 export default function AdminExpenseList() {
   const [allExpenses, setAllExpenses] = useState<Expenses[]>([]);
 
@@ -25,7 +20,7 @@ export default function AdminExpenseList() {
           withCredentials: true,
         }
       );
-      setAllExpenses(response.data.all_expenses); // assuming backend sends { all_users: [...] }
+      setAllExpenses(response.data.all_expenses);
     } catch (error: any) {
       console.error("Failed to fetch expenses:", error);
     }
@@ -67,15 +62,17 @@ export default function AdminExpenseList() {
       headerName: "Actions",
       flex: 1,
       sortable: false,
-      renderCell: (params) => (
-        <IconButton
-          color="error"
-          onClick={() => handleDelete(params.row.id)}
-          aria-label="delete"
-        >
-          <DeleteIcon />
-        </IconButton>
-      ),
+      renderCell: (params) => {
+        return (
+          <IconButton
+            color="error"
+            onClick={() => handleDelete(params.row.id)}
+            aria-label="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
     },
   ];
 

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, IconButton } from "@mui/material";
+import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
 import LoadingIndicator from "./LoadingIndicator";
@@ -11,12 +11,16 @@ type ExpensesPanelProps = {
   isLoading: boolean;
   allExpenses: Expenses[];
   setAllExpenses: React.Dispatch<React.SetStateAction<Expenses[]>>;
+  totalCost: number;
+  fetchTotalCost: () => Promise<void>;
 };
 
 function ExpensesPanel({
   isLoading,
   allExpenses,
   setAllExpenses,
+  totalCost,
+  fetchTotalCost,
 }: ExpensesPanelProps) {
   const [message, setMessage] = useState<string>("");
 
@@ -26,10 +30,12 @@ function ExpensesPanel({
         `http://127.0.0.1:5000/expense/delete-expense/${expenseId}`, //BACKTICKS-INSERTING VARIABLE
         { withCredentials: true }
       );
+
       setMessage(response.data.message);
       setAllExpenses((prevExpenses) =>
         prevExpenses.filter((expense) => expense.expense_id !== expenseId)
       );
+      fetchTotalCost();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setMessage(error.response?.data?.error || "Something went wrong.");
@@ -73,7 +79,7 @@ function ExpensesPanel({
   }));
 
   return (
-    <Box>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -96,6 +102,18 @@ function ExpensesPanel({
         />
       )}
       <Message message={message} />
+
+      <Typography
+        sx={{
+          color: "#0a9396",
+          fontWeight: 600,
+          mb: 2,
+          textTransform: "uppercase",
+          fontSize: { xs: "0.5rem", md: "1rem" },
+        }}
+      >
+        TOTAL SPENT: {totalCost} EUROS
+      </Typography>
     </Box>
   );
 }

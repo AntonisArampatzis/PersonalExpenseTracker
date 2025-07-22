@@ -17,9 +17,10 @@ import axios from "axios";
 
 type NavbarProps = {
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function Navbar({ setIsLogged }: NavbarProps) {
+export default function Navbar({ setIsLogged, setIsAdmin }: NavbarProps) {
   const navigate = useNavigate();
   const [message, setMessage] = useState<string>("");
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -51,6 +52,7 @@ export default function Navbar({ setIsLogged }: NavbarProps) {
 
       setTimeout(() => {
         setIsLogged(false); //this must be here,because backend deletes cookies so it instantly navigates me to login as planned
+        setIsAdmin(false);
         navigate("/");
       }, 1500);
     } catch (error: unknown) {

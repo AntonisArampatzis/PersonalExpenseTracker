@@ -87,11 +87,11 @@ export default function AdminHomePage() {
             variant="h5"
             align="center"
             sx={{
-              color: "#0a9396", // Soothing greenish-blue
-              fontWeight: 600, // Slightly bold
-              mb: 2, // Margin bottom for spacing
-              textTransform: "uppercase", // Optional: gives it a strong heading look
-              fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
+              color: "#0a9396",
+              fontWeight: 600,
+              mb: 2,
+              textTransform: "uppercase",
+              fontSize: { xs: "1rem", md: "1.5rem" },
             }}
           >
             Expenses List

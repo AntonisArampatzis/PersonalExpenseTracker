@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from sqlalchemy import func
 from . import db
 from .dbmodels import UsersTable, Expenses
 from flask_jwt_extended import jwt_required, get_jwt_identity # type: ignore
@@ -89,7 +90,25 @@ def delete_expense(expense_id):
     db.session.commit()
     return jsonify({"message":"Expense delete successfully"}), 200
 
+@route.route('/total-expenses',methods=['GET'])
+@jwt_required()
+def total_expenses():
 
+    # Get user_id from jwt identity
+    current_user = get_jwt_identity()
+
+    total_spent = db.session.query(func.sum(Expenses.cost))\
+    .filter(Expenses.user_id == current_user)\
+    .scalar()#Returns just the number
+
+    total_spent = total_spent or 0
+    
+    return jsonify({"total_expenses":total_spent}),200
+    
+
+
+
+    
 
         
 

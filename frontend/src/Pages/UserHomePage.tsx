@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PageHeader from "../Components/PageHeader";
 import axios from "axios";
 import {
@@ -25,6 +25,8 @@ export default function Home() {
   const [allExpenses, setAllExpenses] = useState<Expenses[]>([]);
   // State to manage loading indicator
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // State to track total spent
+  const [totalCost, setTotalCost] = useState<number>(0);
 
   // Fetch all expenses for the logged-in user
   const getAllExpenses = async () => {
@@ -48,6 +50,29 @@ export default function Home() {
     getAllExpenses();
   }, []);
 
+  //useCallback prevents re-creating the function on every render unless its dependencies change, improving performance when passing it to child components.
+  const fetchTotalCost = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "http://127.0.0.1:5000/expense/total-expenses",
+        { withCredentials: true }
+      );
+
+      const totalCost = response.data.total_expenses;
+      setTotalCost(totalCost);
+      console.log("total cost is:", totalCost);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("Failed to fetch total cost:", error);
+      } else {
+        console.error("Non-Axios error:", error);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    fetchTotalCost();
+  }, []);
+
   // Handle the submit of new expense
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,10 +88,11 @@ export default function Home() {
       setMessage(message);
       // Call getAllExpenses useEffect on submition to live update the table
       await getAllExpenses();
+      await fetchTotalCost();
 
       // Clear the form after adding an expense
       setName("");
-      setCategory("");
+      setCategory(""); //check again its a dropdown i need to reset it aswell visually not only state
       setCost("");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -82,14 +108,14 @@ export default function Home() {
     <Box
       sx={{
         maxWidth: 1200,
-        mx: "auto", // center horizontally in viewport
+        mx: "auto",
         px: 2,
         mt: { xs: 4, md: 8 },
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         justifyContent: "center",
         gap: 4,
-        minHeight: "80vh", // optional: ensures some vertical breathing room
+        minHeight: "80vh",
       }}
     >
       {/* Form Box */}
@@ -97,15 +123,15 @@ export default function Home() {
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          flex: { xs: "1 1 100%", md: "0 0 30%" }, // 30% width desktop, full width mobile
+          flex: { xs: "1 1 100%", md: "0 0 30%" },
           borderRadius: 3,
           boxShadow: 3,
           bgcolor: "background.paper",
           p: { xs: 3, md: 4 },
           display: "flex",
           flexDirection: "column",
-          alignItems: "center", // center horizontally inside form box
-          justifyContent: "center", // center vertically if box taller
+          alignItems: "center",
+          justifyContent: "center",
           gap: 3,
         }}
       >
@@ -113,11 +139,11 @@ export default function Home() {
           variant="h5"
           align="center"
           sx={{
-            color: "#0a9396", // Soothing greenish-blue
-            fontWeight: 600, // Slightly bold
-            mb: 4, // Margin bottom for spacing
-            textTransform: "uppercase", // Optional: gives it a strong heading look
-            fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
+            color: "#0a9396",
+            fontWeight: 600,
+            mb: 4,
+            textTransform: "uppercase",
+            fontSize: { xs: "1rem", md: "1.5rem" },
           }}
         >
           Add Expense
@@ -189,7 +215,7 @@ export default function Home() {
       {/* Expenses Table Panel */}
       <Box
         sx={{
-          flex: { xs: "1 1 100%", md: "0 0 70%" }, // 70% desktop, full width mobile
+          flex: { xs: "1 1 100%", md: "0 0 70%" },
           borderRadius: 3,
           boxShadow: 3,
           bgcolor: "background.paper",
@@ -198,20 +224,20 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: { md: "500px" }, // fixed height on desktop
-          maxHeight: { md: "600px" }, // max height
-          overflowY: "auto", // scroll if content too tall
+          minHeight: { md: "500px" },
+          maxHeight: { md: "600px" },
+          overflowY: "auto",
         }}
       >
         <PageHeader
           variant="h5"
           align="center"
           sx={{
-            color: "#0a9396", // Soothing greenish-blue
-            fontWeight: 600, // Slightly bold
-            mb: 2, // Margin bottom for spacing
-            textTransform: "uppercase", // Optional: gives it a strong heading look
-            fontSize: { xs: "1rem", md: "1.5rem" }, // Responsive sizing
+            color: "#0a9396",
+            fontWeight: 600,
+            mb: 2,
+            textTransform: "uppercase",
+            fontSize: { xs: "1rem", md: "1.5rem" },
           }}
         >
           Your Expenses
@@ -221,6 +247,8 @@ export default function Home() {
             isLoading={isLoading}
             allExpenses={allExpenses}
             setAllExpenses={setAllExpenses}
+            totalCost={totalCost}
+            fetchTotalCost={fetchTotalCost}
           />
         </Box>
       </Box>

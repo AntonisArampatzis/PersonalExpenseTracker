@@ -36,11 +36,9 @@ export default function Login({ setIsLogged, setIsAdmin }: LoginProps) {
 
       setMessage(response.data.message);
       setIsLogged(true);
+
       const role = response.data.role;
-
-      console.log("Logged user is :", response.data.logged_user);
       console.log("Logged user role is :", response.data.role);
-
       if (role === "Admin") {
         setIsAdmin(true);
         setTimeout(() => {

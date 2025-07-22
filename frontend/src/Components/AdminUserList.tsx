@@ -15,6 +15,7 @@ import Message from "./Message";
 export default function AdminUserList() {
   const [allUsers, setAllUsers] = useState<Users[]>([]);
   const [message, setMessage] = useState<string>("");
+
   const fetchAllUsers = async () => {
     try {
       const response = await axios.get(
@@ -23,7 +24,7 @@ export default function AdminUserList() {
           withCredentials: true,
         }
       );
-      setAllUsers(response.data.all_users); // assuming backend sends { all_users: [...] }
+      setAllUsers(response.data.all_users);
     } catch (error: any) {
       console.error("Failed to fetch users:", error);
     }
@@ -64,15 +65,18 @@ export default function AdminUserList() {
       headerName: "Actions",
       flex: 1,
       sortable: false,
-      renderCell: (params) => (
-        <IconButton
-          color="error"
-          onClick={() => handleDelete(params.row.id)}
-          aria-label="delete"
-        >
-          <DeleteIcon />
-        </IconButton>
-      ),
+      renderCell: (params) => {
+        if (params.row.role === "Admin") return null;
+        return (
+          <IconButton
+            color="error"
+            onClick={() => handleDelete(params.row.id)}
+            aria-label="delete"
+          >
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
     },
   ];
 
@@ -81,6 +85,7 @@ export default function AdminUserList() {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+    role: user.role,
   }));
   return (
     <>
