@@ -113,12 +113,6 @@ This project uses the following UI libraries:
 
 - [MUI (Material UI)](https://mui.com/)
 
-These are already included in `package.json`.  
-To install them, just run:
-
-```bash
-npm install
-```
-As shown on 2. Frontend setup
+These are already included in `package.json` and they are already installed during 4. Frontend setup.
 
 
