@@ -11,7 +11,6 @@ import React, { JSX, useEffect, useState } from "react"; //needed when im going 
 import ProtectedRoute from "./Components/ProtectedRoute";
 import axios from "axios";
 import AdminHomePage from "./Pages/AdminHomePage";
-import RoleCheck from "./Components/AdminCheck";
 import AdminCheck from "./Components/AdminCheck";
 import UserCheck from "./Components/UserCheck";
 

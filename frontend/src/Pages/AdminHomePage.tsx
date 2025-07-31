@@ -25,7 +25,7 @@ export default function AdminHomePage() {
           color: "#0a9396", // Soothing greenish-blue
           fontWeight: 600, // Slightly bold
           mb: { xs: 2 }, // Margin bottom for spacing
-          mt: { xs: 2 },
+          mt: { xs: 4, md: 8 },
           textTransform: "uppercase", // Optional: gives it a strong heading look
           fontSize: { xs: "1rem", md: "2rem" }, // Responsive sizing
         }}

@@ -1,7 +1,7 @@
-from flask import Blueprint, request, jsonify
-from sqlalchemy import func
-from . import db
-from .dbmodels import UsersTable, Expenses
+from flask import Blueprint, request, jsonify # type: ignore
+from sqlalchemy import func # type: ignore
+from models import db
+from models.dbmodels import UsersTable, Expenses
 from flask_jwt_extended import jwt_required, get_jwt_identity # type: ignore
 
 route = Blueprint('route',__name__)
@@ -61,12 +61,12 @@ def get_expenses():
         return jsonify({"error": "User not found"}), 404
     
     # Retrieve all expenses associated with this user
-    expenses = Expenses.query.filter_by(user_id=user.user_id).all()
+    expenses = Expenses.query.filter_by(user_id=user.id).all()
 
     # Format the expenses into a list
     expenses_data = [
         {
-            "expense_id": str(exp.expense_id),
+            "expense_id": str(exp.id),
             "name": exp.name,
             "category": exp.category,
             "cost": exp.cost

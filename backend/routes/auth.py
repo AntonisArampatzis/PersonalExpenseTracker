@@ -1,6 +1,6 @@
-from flask import Blueprint, request, jsonify, make_response
-from . import db
-from .dbmodels import UsersTable
+from flask import Blueprint, request, jsonify, make_response # type: ignore
+from models import db
+from models.dbmodels import UsersTable
 from werkzeug.security import generate_password_hash, check_password_hash # type: ignore
 from flask_jwt_extended import create_access_token,create_refresh_token,jwt_required, get_jwt_identity,set_access_cookies, set_refresh_cookies # type: ignore
 from datetime import timedelta
@@ -45,8 +45,8 @@ def login_api():
             # both tokens here signed with this identity user.id
 
             #the expires_delta must be the same with max_age in response.set_cookie
-            access_token = create_access_token(identity=str(user.user_id), expires_delta=timedelta(minutes=10))# ***
-            refresh_token = create_refresh_token(identity=str(user.user_id), expires_delta=timedelta(days=30))# ***!
+            access_token = create_access_token(identity=str(user.id), expires_delta=timedelta(minutes=1))# ***
+            refresh_token = create_refresh_token(identity=str(user.id), expires_delta=timedelta(days=30))# ***!
         
 
 

@@ -16,8 +16,8 @@ import ExpensesPanel from "../Components/ExpensesPanel";
 import { Expenses } from "../types/Expenses";
 
 export default function Home() {
-  const [name, setName] = useState<string>();
-  const [category, setCategory] = useState<string>();
+  const [name, setName] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
   const [cost, setCost] = useState<number | "">("");
   const [message, setMessage] = useState<string>("");
 
@@ -114,6 +114,7 @@ export default function Home() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         justifyContent: "center",
+        alignItems: "center",
         gap: 4,
         minHeight: "80vh",
       }}
@@ -132,7 +133,9 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 3,
+          minHeight: { md: "500px" },
+          maxHeight: { md: "600px" },
+          overflowY: "auto",
         }}
       >
         <PageHeader
