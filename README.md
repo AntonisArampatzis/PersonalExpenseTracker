@@ -12,30 +12,40 @@
 
 ---
 
-### 1. Clone the Repository
+### 1. Download the code from the Repository
 
-```bash
-git clone https://github.com/AntonisArampatzis/PersonalExpenseTracker.git
-cd PersonalExpenseTracker
 
-```
+- Click the Code button (top-right of file list).
+- Choose Download ZIP.
+- Extract the ZIP to your desired folder.
+- Open the folder witch VSC.
+
+
 ---
 
 ### 2. Backend Setup
 
 ```bash
 cd backend
+
 # Create virtual enviroment - optional but recommended
-python -m venv venv         
+python -m venv venv
+         
 # Activate virtual enviroment
 source venv/bin/activate
 # or  
 venv\Scripts\activate # on Windows
+
 # Install Python dependencies
 pip install -r requirements.txt
+
 # Create .env in the project root
 SECRET_KEY=your_jwt_secret_key
 DATABASE_URL=postgresql://username:password@localhost/db_name
+
+# Apply database migrations
+flask db upgrade
+
 # Start the backend server
 flask run
 ```                 
