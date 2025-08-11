@@ -24,6 +24,7 @@
 ---
 ### 2. PostgreSQL Setup
 - [PostgreSQL](https://www.postgresql.org/download/) (v13+ recommended)
+- Use pgAdmin to create :
 - A PostgreSQL user with a password
 - A database created for this project
 > ⚠️ During installation, note your **username** and **password** — you’ll need them later.
