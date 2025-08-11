@@ -18,15 +18,28 @@
 - Click the Code button (top-right of file list).
 - Choose Download ZIP.
 - Extract the ZIP to your desired folder.
-- Open the folder witch VSC.
+- Open the folder in VSC.
 
 
 ---
+### 2. PostgreSQL Setup
+- [PostgreSQL](https://www.postgresql.org/download/) (v13+ recommended)
+- A PostgreSQL user with a password
+- A database created for this project
+> ⚠️ During installation, note your **username** and **password** — you’ll need them later.
 
-### 2. Backend Setup
+####  Create a new database
+
+Open the terminal or pgAdmin and run:
+
+```sql
+CREATE DATABASE PersonalExpenseTracker;
+```
+---
+### 3. Backend Setup
 
 ```bash
-cd backend
+# Open a terminal for backend
 
 # Create virtual enviroment - optional but recommended
 python -m venv venv
@@ -54,24 +67,11 @@ flask run
 ##### Runs on http://127.0.0.1:5000
 
 
-### 3. PostgreSQL Setup
-- [PostgreSQL](https://www.postgresql.org/download/) (v13+ recommended)
-- A PostgreSQL user with a password
-- A database created for this project
-> ⚠️ During installation, note your **username** and **password** — you’ll need them later.
 
-####  Create a new database
-
-Open the terminal or pgAdmin and run:
-
-```sql
-CREATE DATABASE PersonalExpenseTracker;
-```
----
 ### 4. Frontend Setup
 
 ```bash
-cd ../frontend
+# Open a new terminal for frontend 
 npm install        
 npm run dev        
 ```
